@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "cion_core",
+	"version": "${version}",
+	"name": "Cion Core",
+	"description": "Shared library for the Cion mod suite. Provides config, registry, render, and net helpers.",
+	"authors": [
+		"Cion"
+	],
+	"contact": {},
+	"license": "MPL-2.0",
+	"icon": "assets/cion_core/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"cion.core.CionCore"
+		],
+		"client": [
+			"cion.core.client.CionCoreClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "cion_core.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"accessWidener": "cion_core.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~26.2-",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
