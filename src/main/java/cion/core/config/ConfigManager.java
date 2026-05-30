@@ -43,6 +43,7 @@ public final class ConfigManager<T> {
 		this.defaults = defaults;
 		this.logger = LoggerFactory.getLogger(modId + "/config");
 		this.instance = defaults.get();
+		ConfigRegistry.register(this);
 	}
 
 	/** Set a callback that runs after each successful load, before re-save. */
@@ -53,6 +54,30 @@ public final class ConfigManager<T> {
 
 	public T get() {
 		return instance;
+	}
+
+	public String modId() {
+		return modId;
+	}
+
+	public Class<T> type() {
+		return type;
+	}
+
+	/** Replace the live instance. Caller is responsible for calling save() if needed. */
+	public void set(T value) {
+		if (value == null) throw new IllegalArgumentException("config instance cannot be null");
+		this.instance = value;
+	}
+
+	/** Deep-clone the current instance via Gson round-trip. */
+	public T clone(T value) {
+		return GSON.fromJson(GSON.toJson(value), type);
+	}
+
+	/** Serialize given instance to canonical JSON (for equality comparison). */
+	public String toJson(T value) {
+		return GSON.toJson(value);
 	}
 
 	public void load() {
